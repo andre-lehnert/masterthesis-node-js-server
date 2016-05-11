@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Angular Material</title>
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/angular/angular-material.min.css">
+</head>
+	<body ng-app="YourApp">
+ 
+	<div ng-controller="YourController" layout="column">
+       {{author}}
+	</div>
+ 
+	<script src="assets/angular/angular.js"></script> 
+	<script>
+ 
+		// Include app dependency on ngMaterial 
+ 
+		angular.module( 'YourApp', [ 'ngMaterial' ] )
+			.controller("YourController", function($scope, $http) {
+        
+          //$scope.url = 'https://masterthesis-rpi-server-andre-lehnert.c9users.io:8080';
+          $scope.apiVersion = '0';
+          $scope.title = 'REST-API to control a physical 3D barchart over I²C';
+          $scope.apiVersion = 0;
+          $scope.author = 'Andre Lehnert';
+          
+      });
+        
+	</script> 
+ 
+</body>
+</html>

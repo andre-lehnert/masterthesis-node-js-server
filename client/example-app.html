@@ -1,0 +1,76 @@
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.css">
+  <link rel="stylesheet" href="css/angular-material-layout.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+  <!--
+    Your HTML content here
+  -->
+  <div ng-app="MyApp" ng-controller="AppCtrl" ng-cloak="" class="toolbardemoBasicUsage">
+
+
+    <md-content>
+      <md-toolbar>
+        <div class="md-toolbar-tools">
+          <md-button class="md-icon-button" aria-label="Settings">
+            <!-- Icon ID; may contain optional icon set prefix; icons must registered using $mdIconProvider -->
+          <i class="material-icons">view_headline</i>
+          </md-button>
+          <h2>
+            <span>Toolbar with Icon Buttons</span>
+          </h2>
+          <span flex></span>
+          <md-button class="md-icon-button" aria-label="More">
+           <i class="material-icons">more_vert</i>
+         </md-button>
+
+
+        </div>
+      </md-toolbar>
+    </md-content>
+
+</div>
+
+<!--
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+-->
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-animate.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-aria.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.5.3/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="http://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc2/angular-material.min.js"></script>
+
+  <!-- Your application bootstrap  -->
+  <script type="text/javascript">
+    /**
+     * You must include the dependency on 'ngMaterial'
+     */
+
+ angular.module('MyApp',['ngMaterial'])
+
+ .controller('AppCtrl', function($scope) {
+
+ });
+
+
+ /**
+ Copyright 2016 Google Inc. All Rights Reserved.
+ Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+ **/
+  </script>
+
+</body>
+</html>
+
+<!--
+Copyright 2016 Google Inc. All Rights Reserved.
+Use of this source code is governed by an MIT-style license that can be in foundin the LICENSE file at http://material.angularjs.org/license.
+-->
