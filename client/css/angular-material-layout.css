@@ -1,4 +1,10 @@
+canvas {
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
 
+    
 .card-list-headline {
   margin-left: 2%;
 }
@@ -41,3 +47,28 @@
 .listdemoBasicUsage md-divider {
   margin-top: 10px;
   margin-bottom: 10px; }
+
+.vertical-slider {
+    height: 250px;
+}
+
+
+
+
+th, td {
+    padding: 1%;
+}
+
+.table-center {
+  text-align: center;
+}
+
+
+.animate-show {
+  transition: all linear 0.5s;
+  opacity: 1;
+}
+
+.animate-show.ng-hide {
+  opacity: 0;
+}
