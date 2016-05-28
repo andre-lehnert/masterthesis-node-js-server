@@ -101,16 +101,28 @@ angular
         $scope.examples = [];
 
         var url = example.url;
+        var tempUrl = url;
+        var temp = '';
         $log.debug('Example URI: ' + example);
         console.log(example);
         // iterate params
+
+
+
         for (var i = 0; i < example.params.length; i++) {
+
           // iterate example values
           for (var j = 0; j < example.params[i].values.length; j++) {
               // replace parameter placeholder with example values
-              var temp = url.replace(example.params[i].param, example.params[i].values[j]);
-              // concat uri praefix
-              $scope.examples.push('/' + $scope.uriPraefix + $scope.apiVersion + temp);
+
+              temp = tempUrl.replace(example.params[i].param, example.params[i].values[j]);
+
+              if (temp.indexOf(':') == -1) {
+                $scope.examples.push('/' + $scope.uriPraefix + $scope.apiVersion + temp);              
+              } else {
+                tempUrl = temp;
+
+              }
           }
         }
 

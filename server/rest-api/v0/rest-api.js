@@ -1,4 +1,4 @@
-// # Version 0 
+// # Version 0
 //
 var express = require('express');
 var _move = require('./operations/move')
@@ -15,15 +15,15 @@ var app = module.exports = express();
 var version    = 0, // v0
     author          = 'Andre Lehnert',
     title           = 'REST-API to control a physical 3D barchart over I²C';
-    
+
 
 
 // ---------------- ROUTING ----------------------------------------------------
 
 // shows API information
 app.get('/', function(req, res) {
-    
-    var API = 
+
+    var API =
     {
         'description': title,
         'version': version,
@@ -33,22 +33,26 @@ app.get('/', function(req, res) {
             '/': 'Shows API information',
             '/[operation]': {
                 '/move' : barchartReceiverMoveOperation,
-                '/status' : barchartReceiverStatusOperation,
-                '/position': barchartReceiverPositionOperation
+                '/status' : barchartReceiverStatusOperation, //TODO
+                '/position': barchartReceiverPositionOperation, //TODO
+                '/lighting': barchartReceiverLightingOperation,
+                '/update': barchartReceiverUpdateOperation,
             }
         }
     };
-    
-    
+
+
     res.json(API);
 })
 
 // ## OPERATION
-var OPERATIONS = 
+var OPERATIONS =
 {
     'move': '/move',
     'status' : '/status',
-    'position': '/position'
+    'position': '/position',
+    'lighting': '/lighting',
+    'update': '/update'
 };
 
 var urlOperations = [];
@@ -74,11 +78,11 @@ var barchartReceiverMoveOperation =
     }
 };
 
-var statusExample = 
-{ 
-    'position' : 100, 
-    'steps' : 15000, 
-    'heatbeat-interval' : 1000 
+var statusExample =
+{
+    'position' : 100,
+    'steps' : 15000,
+    'heatbeat-interval' : 1000
 };
 
 var barchartReceiverStatusOperation =
@@ -100,5 +104,22 @@ var barchartReceiverPositionOperation =
     }
 };
 
+var barchartReceiverLightingOperation =
+{
+    '/[barchart receiver]' : {
+        '/all' : 'Turns the LED lighting/ animation for all bars',
+        '/:barchartColumn' : 'Turns the LED lighting/ animation of column :barchartColumn [A-J], e.g. "{ "A" : { "1" : 0, "2" : 10, "3" : 100}}"',
+        '/:barchartRow' : 'Turns the LED lighting/ animation of row :barchartRow [1-10], e.g. "{ "1" : { "A" : 0, "B" : 10, "C" : 100}}"',
+        '/:bar' : 'Turns the LED lighting/ animation of [A-J][1-10], e.g. "{ "A1" : 100}"'
+    }
+};
 
-
+var barchartReceiverUpdateOperation =
+{
+    '/[barchart receiver]' : {
+        '/all' : 'Combination of /move and /lighting functions for all bars',
+        '/:barchartColumn' : 'Combination of /move and /lighting functions column :barchartColumn [A-J], e.g. "{ "A" : { "1" : 0, "2" : 10, "3" : 100}}"',
+        '/:barchartRow' : 'Combination of /move and /lighting functions row :barchartRow [1-10], e.g. "{ "1" : { "A" : 0, "B" : 10, "C" : 100}}"',
+        '/:bar' : 'Combination of /move and /lighting functions of [A-J][1-10], e.g. "{ "A1" : 100}"'
+    }
+};

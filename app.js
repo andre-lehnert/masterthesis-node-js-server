@@ -35,17 +35,11 @@ app.set('_PORT', PORT);
 
 
 
-
-
+// ## Client
+//
 // route to angular material prototype
 app.get('/', function(req, res) {
     res.sendfile(__dirname + 'client/index.html');
-})
-
-
-// route to api browser
-app.get('/api', function(req, res) {
-    res.sendfile(__dirname + '/client/api-browser.html');
 })
 
 // route to display versions
@@ -53,11 +47,13 @@ app.get('/api/versions', function(req, res) {
     res.json(VERSIONS);
 })
 
-// versioned routes go in the routes/ directory
+// ## Server
+//
+// versioned routes go in the server/rest-api directory
 // import the routes
 for (var k in VERSIONS) {
     // e.g. ./server/routes/rest-api/v0/api.js
-    app.use('/api' + VERSIONS[k], require('./server/routes/rest-api' + VERSIONS[k] + '/rest-api'));
+    app.use('/api' + VERSIONS[k], require('./server/rest-api' + VERSIONS[k] + '/rest-api'));
 }
 
 

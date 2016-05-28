@@ -53,11 +53,11 @@
 
          <md-list>
             <md-list-item  class="sidenav-list-item" ng-repeat="de in details" ng-click="setExample(de);" >
-              <div style="width: 20%;">
+              <div style="width: 35%;">
                 <p>{{de.url}}</p>
               </div>
               <div>
-                <p>{{de.description}}</p>
+                <p>{{de.description | cut:true:100:' ...'}}</p>
               </div>
             </md-list-item>
          </md-list>

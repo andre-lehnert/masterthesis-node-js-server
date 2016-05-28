@@ -6,7 +6,8 @@ angular
                                       'colorpicker.module', // colorpicker
                                       'rzModule', // slider
                                       'material.svgAssetsCache',
-                                      'ui.bootstrap'
+                                      'ui.bootstrap',
+                                      'jsonFormatter'
                                     ] )
 
 // constants
@@ -15,11 +16,15 @@ angular
 
 // // // // // // // // // // // // // // // // // // // // // // // // //
 // #2 Manual Control
-app.controller('ControlController', function($scope, $log, $rootScope, $timeout, $uibModal) {
+app.controller('ControlController', function($scope, $log, $rootScope, $http, $timeout, $uibModal) {
 
     $rootScope.currentPage = $rootScope.mainPages[2];
 
     $log.debug("ControlController");
+
+
+    $scope.apiVersion = '0'; // <- Change
+    $scope.uriPraefix = 'api/v';
 
     // 1. Select bar
 
@@ -175,9 +180,16 @@ app.controller('ControlController', function($scope, $log, $rootScope, $timeout,
 
     $scope.animations = [
       'None',
+      'Switch-On',
+      'Glow',
       'Blink',
-      'Blur',
-      'Loading'
+      'Fade',
+      'Shift-Up',
+      'Shift-Down',
+      'Comet',
+      'Bouncing',
+      'Bubbles',
+      'Moving-Bars'
     ];
 
     $scope.selectAnimation = function (animation) {
@@ -186,13 +198,73 @@ app.controller('ControlController', function($scope, $log, $rootScope, $timeout,
 
     $scope.isRequestSend = false;
     $scope.isResponseReceived = false;
+
     $scope.request = {};
-    $scope.request.text = 'Loves kittens, snowboarding, and can type at 130 WPM.\n\nAnd rumor has it she bouldered up Castle Craig!';
+    $scope.request.text = '';
+    $scope.request.i2c = '';
+    
+    $scope.response = {};
+    $scope.response.json = {};
+    $scope.response.i2c = '';
+
     // 4. Send Request
     $scope.sendUpdate = function () {
          $log.debug("Request: ");
          $scope.isRequestSend = true;
+
+         var color = rgb2hex($scope.barColor);
+         $log.debug(color);
+         var brightness = rgba2brigthness($scope.barColor);
+         $log.debug(brightness + "%");
+
+         var uri = $scope.uriPraefix + $scope.apiVersion + '/update/'
+            + $scope.selectedBar.name.toLowerCase() + '/' // :barReceiver
+            + $scope.barPosition + '/' // :position
+            + $scope.barAnimation.toLowerCase() + '/' // :animation
+            + color + '/' // :color
+            + brightness + '/' // :brightness
+            + '100' + '/'; // :speed
+
+            $log.debug(uri);
+            $scope.request.text = uri;
+
+
+         $http({method: 'GET' , url: uri}).
+             success(function(data, status) {
+               $log.debug(data);
+               $scope.response.json = data;
+
+               $scope.isResponseReceived = true;
+             }).
+             error(function(data, status) {
+               console.log(data || "Request failed");
+           });
     };
 
 
 });
+
+function rgb2hex(rgb){
+ rgb = rgb.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+(\.\d{1,2})?)[\s+]?/i);
+
+ if (rgb[5] == null) { rgb[5] = 0; }
+
+ return (rgb && rgb.length === 5) ? "" +
+  ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+  ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+  ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) :
+
+   (rgb && rgb.length === 6) ? "" +
+   ("0" + parseInt(rgb[1],10).toString(16)).slice(-2) +
+   ("0" + parseInt(rgb[2],10).toString(16)).slice(-2) +
+   ("0" + parseInt(rgb[3],10).toString(16)).slice(-2) : '';
+}
+
+function rgba2brigthness(rgba){
+ rgba = rgba.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+(\.\d{1,2})?)[\s+]?/i);
+
+ if (rgba[5] == null) { rgba[5] = 0; }
+
+ return (rgba && rgba.length === 5) ? ("" + parseInt(rgba[4])) :
+        (rgba && rgba.length === 6) ? ("" + parseInt(rgba[4]*100)) : '';
+}

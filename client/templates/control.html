@@ -135,10 +135,16 @@
           </md-card-title>
           <md-card-content>
 
-            <!-- Request -->
+            <!-- REST Request -->
             <md-input-container class="md-block">
-              <label>Request</label>
-              <textarea ng-model="request.text" rows="20" md-select-on-focus style="height: 200px"></textarea>
+              <label>REST-Request</label>
+              <textarea ng-model="request.text" rows="2" md-select-on-focus style="height:30px"></textarea>
+            </md-input-container>
+
+            <!-- I2C Request -->
+            <md-input-container class="md-block">
+              <label>I²C-Request</label>
+              <textarea ng-model="request.i2c" rows="2" md-select-on-focus style="height:30px"></textarea>
             </md-input-container>
 
           </md-card-content>
@@ -157,14 +163,21 @@
             </md-card-title-text>
           </md-card-title>
           <md-card-content>
-            
+
             <!-- Response -->
             <md-progress-linear md-mode='query' style="width: 100%;" ng-hide="isResponseReceived"></md-progress-linear>
 
             <md-input-container class="md-block" ng-show="isResponseReceived">
-              <label>Response</label>
-              <textarea ng-model="request.text" rows="20" md-select-on-focus style="height: 200px"></textarea>
+              <label>I²C-Response</label>
+              <textarea ng-model="response.i2c" rows="2" md-select-on-focus style="height:30px"></textarea>
             </md-input-container>
+
+            <md-input-container class="md-block" ng-show="isResponseReceived">
+              <label>REST-Response</label>
+              <textarea ng-model="response.json" rows="2" md-select-on-focus style="height:30px"></textarea>
+              <json-formatter json="response.json" open="3" style="margin-top: 40px"></json-formatter>
+            </md-input-container>
+
 
 
           </md-card-content>
